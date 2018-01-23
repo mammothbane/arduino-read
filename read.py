@@ -16,7 +16,8 @@ light_insert = 'INSERT INTO light (measurement) VALUES (%s)'
 temp_insert = 'INSERT INTO temperature (measurement) VALUES (%s)'
 
 with open('/dev/ttyUSB0', encoding='ascii') as f:
-    ct = 0
+    loop_ct = 1
+    light_ct = 0
     acc = 0
 
     for line in f:
@@ -32,9 +33,13 @@ with open('/dev/ttyUSB0', encoding='ascii') as f:
             assert(segments[0] == 'l')
 
             acc += int(segments[1])
-            ct += 1
+            light_ct += 1
 
-            if ct == 10:
+            if light_ct == 10:
                 cursor.execute(light_insert, (acc/10,))
                 acc = 0
-                ct = 0
+                light_ct = 0
+
+        loop_ct += 1
+        if loop_ct % 100 == 0:
+            conn.commit()
