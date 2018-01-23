@@ -13,8 +13,8 @@ conn = connector.connect(user=config['username'],
 
 with open('/dev/ttyUSB0') as f:
     cursor = conn.cursor()
-    light_insert = 'INSERT INTO light (measurement) VALUES (%f)'
-    temp_insert = 'INSERT INTO temperature (measurement) VALUES (%d)'
+    light_insert = 'INSERT INTO light (measurement) VALUES (%d)'
+    temp_insert = 'INSERT INTO temperature (measurement) VALUES (%f)'
 
     ct = 0
     acc = 0
