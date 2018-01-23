@@ -11,10 +11,10 @@ conn = connector.connect(user=config['username'],
                          host='127.0.0.1',
                          database='arduino')
 
-with open('/dev/ttyUSB0') as f:
+with open('/dev/ttyUSB0', encoding='ascii') as f:
     cursor = conn.cursor()
-    light_insert = 'INSERT INTO light (measurement) VALUES (%d)'
-    temp_insert = 'INSERT INTO temperature (measurement) VALUES (%f)'
+    light_insert = 'INSERT INTO light (measurement) VALUES (%s)'
+    temp_insert = 'INSERT INTO temperature (measurement) VALUES (%s)'
 
     ct = 0
     acc = 0
