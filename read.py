@@ -1,6 +1,8 @@
 from mysql import connector
 import json
 
+LIGHT_CT = 250
+LOOP_CT = 1000
 
 with open('config.json') as f:
     config = json.load(f)
@@ -17,7 +19,7 @@ temp_insert = 'INSERT INTO temperature (measurement) VALUES (%s)'
 
 with open('/dev/ttyUSB0', encoding='ascii') as f:
     loop_ct = 1
-    light_ct = 0
+    light_ct = 1
     acc = 0
 
     for line in f:
@@ -35,11 +37,10 @@ with open('/dev/ttyUSB0', encoding='ascii') as f:
             acc += int(segments[1])
             light_ct += 1
 
-            if light_ct == 10:
+            if light_ct % LIGHT_CT == 0:
                 cursor.execute(light_insert, (acc/10,))
                 acc = 0
-                light_ct = 0
 
         loop_ct += 1
-        if loop_ct % 100 == 0:
+        if loop_ct % LOOP_CT == 0:
             conn.commit()
