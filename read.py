@@ -6,10 +6,12 @@ with open('config.json') as f:
     config = json.load(f)
 
 
-with connector.connect(user=config['username'],
-                       password=config['password'],
-                       host='127.0.0.1',
-                       database='arduino') as conn, open('/dev/ttyUSB0') as f:
+conn = connector.connect(user=config['username'],
+                         password=config['password'],
+                         host='127.0.0.1',
+                         database='arduino')
+
+with open('/dev/ttyUSB0') as f:
     cursor = conn.cursor()
     light_insert = 'INSERT INTO light (measurement) VALUES (?)'
     temp_insert = 'INSERT INTO temperature (measurement) VALUES (?)'
