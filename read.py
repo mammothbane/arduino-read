@@ -22,16 +22,16 @@ with open('/dev/ttyUSB0') as f:
     for line in f:
         segments = line.strip().lower().split(' ')
 
-        if len(line) != 2:
+        if len(segments) != 2:
             continue
 
-        if line[0] == 't':
-            cursor.execute(temp_insert, line[1])
+        if segments[0] == 't':
+            cursor.execute(temp_insert, segments[1])
 
         else:
-            assert(line[0] == 'l')
+            assert(segments[0] == 'l')
 
-            acc += int(line[1])
+            acc += int(segments[1])
             ct += 1
 
             if ct == 10:
