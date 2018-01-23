@@ -26,7 +26,7 @@ with open('/dev/ttyUSB0') as f:
             continue
 
         if segments[0] == 't':
-            cursor.execute(temp_insert, segments[1])
+            cursor.execute(temp_insert, (segments[1],))
 
         else:
             assert(segments[0] == 'l')
@@ -35,6 +35,6 @@ with open('/dev/ttyUSB0') as f:
             ct += 1
 
             if ct == 10:
-                cursor.execute(light_insert, acc)
+                cursor.execute(light_insert, (acc,))
                 acc = 0
                 ct = 0
