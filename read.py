@@ -6,7 +6,7 @@ with open('config.json') as f:
     config = json.load(f)
 
 
-with connector.connect(user=config['user'],
+with connector.connect(user=config['username'],
                        password=config['password'],
                        host='127.0.0.1',
                        database='arduino') as conn, open('/dev/ttyUSB0') as f:
