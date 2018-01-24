@@ -1,4 +1,7 @@
+#!/usr/bin/env python
+
 from mysql import connector
+from serial.tools import list_ports
 import json
 
 LIGHT_CT = 250
@@ -13,11 +16,20 @@ conn = connector.connect(user=config['username'],
                          host='127.0.0.1',
                          database='arduino')
 
+print('connected to database')
+
 cursor = conn.cursor()
 light_insert = 'INSERT INTO light (measurement) VALUES (%s)'
 temp_insert = 'INSERT INTO temperature (measurement) VALUES (%s)'
 
-with open('/dev/ttyUSB0', encoding='ascii') as f:
+ports = list_ports.comports(include_links=True)
+
+print('got the following ports:')
+print(',\n'.join([port.device for port in ports]))
+
+print('\nusing first found port')
+
+with open(ports[0].device, encoding='ascii') as f:
     loop_ct = 1
     light_ct = 1
     acc = 0
