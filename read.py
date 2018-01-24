@@ -4,8 +4,8 @@ from mysql import connector
 from serial.tools import list_ports
 import json
 
-LIGHT_CT = 250
-LOOP_CT = 1000
+LIGHT_CT = 25
+LOOP_CT = 150
 
 with open('config.json') as f:
     config = json.load(f)
@@ -27,7 +27,7 @@ ports = list_ports.comports(include_links=True)
 print('got the following ports:')
 print(',\n'.join([port.device for port in ports]))
 
-print('\nusing first found port')
+print('\nusing first found port: {}'.format(ports[0].device))
 
 with open(ports[0].device, encoding='ascii') as f:
     loop_ct = 1
@@ -50,7 +50,7 @@ with open(ports[0].device, encoding='ascii') as f:
             light_ct += 1
 
             if light_ct % LIGHT_CT == 0:
-                cursor.execute(light_insert, (acc/10,))
+                cursor.execute(light_insert, (acc/LIGHT_CT,))
                 acc = 0
 
         loop_ct += 1
