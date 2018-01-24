@@ -4,8 +4,8 @@ from mysql import connector
 from serial.tools import list_ports
 import json
 
-LIGHT_CT = 25
-LOOP_CT = 150
+LIGHT_CT = 50
+LOOP_CT = 125
 
 with open('config.json') as f:
     config = json.load(f)
